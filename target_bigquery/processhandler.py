@@ -212,7 +212,7 @@ class LoadJobProcessHandler(BaseProcessHandler):
         loaded_tmp_tables = []
         try:
             for stream in rows.keys():
-                tmp_table_name = "t_{}_{}".format(self.tables[stream], str(uuid.uuid4()).replace("-", ""))
+                tmp_table_name = "t_{}_{}".format(self.tables[stream], str(uuid.uuid4()).replace("-", "")).replace("$","")
 
                 job = self._load_to_bq(
                     client=self.client,
