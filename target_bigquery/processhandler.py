@@ -293,10 +293,15 @@ class LoadJobProcessHandler(BaseProcessHandler):
 
         # partitioning
         if partition_field:
-            load_config.time_partitioning = bigquery.table.TimePartitioning(
-                type_=bigquery.table.TimePartitioningType.DAY,
-                field=partition_field
-            )
+            if partition_field == "_PARTITIONTIME":
+                load_config.time_partitioning = bigquery.table.TimePartitioning(
+                    type_=bigquery.table.TimePartitioningType.DAY
+                )
+            else:
+                load_config.time_partitioning = bigquery.table.TimePartitioning(
+                    type_=bigquery.table.TimePartitioningType.DAY,
+                    field=partition_field
+                )
 
         # clusteing
         if cluster_fields:
